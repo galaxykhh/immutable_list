@@ -59,4 +59,40 @@ extension ImmutableListExtension<T> on List<T> {
   /// print(list2); // ['H', 'A', 'N']
   /// ```
   List<T> immutableInsertAll(int index, Iterable<T> iterable) => copy()..insertAll(index, iterable);
+
+  /// [value]를 제외한 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String>['H', 'A', 'N', 'G'];
+  /// final list2 = list1.immutableRemove('G');
+  ///
+  /// print(list1); // ['H', 'A', 'N', 'G']
+  /// print(list2); // ['H', 'A', 'N']
+  /// ```
+  List<T> immutableRemove(T value) => copy()..remove(value);
+
+  /// [index]에 해당하는 항목이 제거된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String>['H', 'A', 'N', 'G'];
+  /// final list2 = list1.immutableRemoveAt(3);
+  ///
+  /// print(list1); // ['H', 'A', 'N', 'G']
+  /// print(list2); // ['H', 'A', 'N']
+  ///```
+  List<T> immutableRemoveAt(int index) => copy()..removeAt(index);
+
+  /// [condition]에 해당하는 모든 항목이 제거된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final List<String> list1 = ['H', 'Z', 'A', 'Z', 'N', 'Z'];
+  /// final List<String> list2 = list1.immutableRemoveWhere((item) => item == 'Z');
+  ///
+  /// print(list1); // ['H', 'Z', 'A', 'Z', 'N', 'Z']
+  /// print(list2); // ['H', 'A', 'N']
+  /// ```
+  List<T> immutableRemoveWhere(bool Function(T item) condition) => copy()..removeWhere(condition);
 }

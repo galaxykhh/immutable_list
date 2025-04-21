@@ -57,5 +57,34 @@ void main() {
       expect(inserted, equals(['H', 'A', 'N']));
       expect(identical(origin, inserted), isFalse);
     });
+
+    test('List.immutableRemove는 항목이 삭제된 새로운 List를 반환한다.', () {
+      final List<String> origin = ['H', 'A', 'N', 'G'];
+      final List<String> removed = origin.immutableRemove('G');
+
+      expect(origin, ['H', 'A', 'N', 'G']);
+      expect(removed, ['H', 'A', 'N']);
+      expect(identical(origin, removed), isFalse);
+    });
+
+    test('List.immutableRemoveAt은 index번째 항목이 삭제된 새로운 List를 반환한다', () {
+      final List<String> origin = ['H', 'A', 'N', 'G'];
+      final List<String> removed = origin.immutableRemoveAt(3);
+
+      expect(origin, ['H', 'A', 'N', 'G']);
+      expect(removed, ['H', 'A', 'N']);
+      expect(identical(origin, removed), isFalse);
+    });
+
+    test('List.immutableRemoveWhere는 condition에 해당하는 모든 항목이 삭제된 새로운 List를 반환한다', () {
+      bool filterZ(String item) => item == 'Z';
+
+      final List<String> origin = ['H', 'Z', 'A', 'Z', 'N', 'Z'];
+      final List<String> removed = origin.immutableRemoveWhere(filterZ);
+
+      expect(origin, ['H', 'Z', 'A', 'Z', 'N', 'Z']);
+      expect(removed, ['H', 'A', 'N']);
+      expect(identical(origin, removed), isFalse);
+    });
   });
 }

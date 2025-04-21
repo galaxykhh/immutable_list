@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:immutable_list/immutable_list.dart';
 import 'package:test/test.dart';
 
@@ -128,6 +130,16 @@ void main() {
       expect(origin, ['O', 'V', 'E', 'N']);
       expect(replaced, ['H', 'A', 'N']);
       expect(identical(origin, replaced), isFalse);
+    });
+
+    test('List.copyShuffle은 요소의 순서가 섞인 새로운 List를 반환한다', () {
+      final List<String> origin = ['H', 'A', 'N'];
+      final List<String> shuffled = origin.copyShuffle(Random(24));
+
+      expect(origin, ['H', 'A', 'N']);
+      expect(shuffled, ['A', 'N', 'H']);
+      expect(origin.toSet(), equals(origin.toSet()));
+      expect(identical(origin, shuffled), isFalse);
     });
   });
 }

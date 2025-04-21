@@ -1,3 +1,5 @@
+import 'dart:math';
+
 typedef Condition<T> = bool Function(int index, T item);
 
 extension ImmutableListExtension<T> on List<T> {
@@ -189,10 +191,6 @@ extension ImmutableListExtension<T> on List<T> {
     return copied;
   }
 
-  // List<T> copyReplaceWhere(bool Function(T item) condition, T item) {
-  //   final List<T> copied = copy();
-  // }
-
   /// [start]부터 [end]에 해당하는 범위가 [replacements]로 교체된 새로운 [List]를 반환합니다.
   ///
   /// Example:
@@ -204,4 +202,6 @@ extension ImmutableListExtension<T> on List<T> {
   /// print(list2); // ['H', 'A', 'N']
   /// ```
   List<T> copyReplaceRange(int start, int end, Iterable<T> replacements) => copy()..replaceRange(start, end, replacements);
+
+  List<T> copyShuffle([Random? random]) => copy()..shuffle(random);
 }

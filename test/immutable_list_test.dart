@@ -76,6 +76,15 @@ void main() {
       expect(identical(origin, removed), isFalse);
     });
 
+    test('List.copyRemoveSingleWhere는 condition에 해당하는 첫 번째 항목이 삭제된 새로운 List를 반환한다', () {
+      final List<String> origin = ['H', 'A', 'A', 'N'];
+      final List<String> removed = origin.copyRemoveSingleWhere((int index, String item) => item == 'A');
+
+      expect(origin, ['H', 'A', 'A', 'N']);
+      expect(removed, ['H', 'A', 'N']);
+      expect(identical(origin, removed), isFalse);
+    });
+
     test('List.copyRemoveWhere는 condition에 해당하는 모든 항목이 삭제된 새로운 List를 반환한다', () {
       final List<String> origin = ['H', 'Z', 'A', 'Z', 'N', 'Z'];
       final List<String> removed = origin.copyRemoveWhere((int index, String item) => item == 'Z');
@@ -91,6 +100,15 @@ void main() {
 
       expect(origin, ['F', 'A', 'N']);
       expect(replaced, ['H', 'A', 'N']);
+      expect(identical(origin, replaced), isFalse);
+    });
+
+    test('List.copyReplaceSingleWhere은 condition에 해당하는 첫 번째 항목이 변경된 새로운 List를 반환한다', () {
+      final List<String> origin = ['B', 'A', 'K', 'A', 'N', 'A'];
+      final List<String> replaced = origin.copyReplaceSingleWhere((int index, String item) => item == 'K', 'N');
+
+      expect(origin, ['B', 'A', 'K', 'A', 'N', 'A']);
+      expect(replaced, ['B', 'A', 'N', 'A', 'N', 'A']);
       expect(identical(origin, replaced), isFalse);
     });
 

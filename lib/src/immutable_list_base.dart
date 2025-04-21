@@ -1,3 +1,5 @@
+typedef Condition<T> = bool Function(int index, T item);
+
 extension ImmutableListExtension<T> on List<T> {
   /// 복사된 새로운 [List]를 반환합니다
   ///
@@ -84,6 +86,30 @@ extension ImmutableListExtension<T> on List<T> {
   ///```
   List<T> copyRemoveAt(int index) => copy()..removeAt(index);
 
+  /// [condition]에 해당하는 첫 번째 항목이 제거된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String>['H', 'A', 'A', 'N'];
+  /// final list2 = list1.copyRemoveSingleWhere((int index, String item) => item == 'A');
+  ///
+  /// print(list1); // ['H', 'A', 'A', 'N']
+  /// print(list2); // ['H', 'A', 'N']
+  /// ```
+  List<T> copyRemoveSingleWhere(Condition<T> condition) {
+    final List<T> copied = copy();
+
+    for (int i = 0; i < length; i++) {
+      if (condition(i, this[i])) {
+        copied.removeAt(i);
+
+        break;
+      }
+    }
+
+    return copied;
+  }
+
   /// [condition]에 해당하는 모든 항목이 제거된 새로운 [List]를 반환합니다.
   ///
   /// Example:
@@ -94,7 +120,7 @@ extension ImmutableListExtension<T> on List<T> {
   /// print(list1); // ['H', 'Z', 'A', 'Z', 'N', 'Z']
   /// print(list2); // ['H', 'A', 'N']
   /// ```
-  List<T> copyRemoveWhere(bool Function(int index, T item) condition) {
+  List<T> copyRemoveWhere(Condition<T> condition) {
     final List<T> list = [];
 
     asMap().forEach((k, v) {
@@ -117,6 +143,29 @@ extension ImmutableListExtension<T> on List<T> {
   /// print(list2); // ['H', 'A', 'N']
   /// ```
   List<T> copyReplaceAt(int index, T item) => copy()..replaceRange(index, index + 1, [item]);
+
+  /// [condition]에 해당하는 첫 번째 항목이 [item]으로 교체된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  ///	final list1 = <String>['B', 'A', 'K', 'A', 'N', 'A'];
+  /// final list2 = list1.copyReplaceWhere((int index, String item) => item == 'K', 'N');
+  ///
+  /// print(list1); // ['B', 'A', 'K', 'A', 'N', 'A']
+  /// print(list2); // ['B', 'A', 'N', 'A', 'N', 'A']
+  /// ```
+  List<T> copyReplaceSingleWhere(Condition<T> condition, T item) {
+    final List<T> copied = copy();
+
+    for (int i = 0; i < length; i++) {
+      if (condition(i, this[i])) {
+        copied.replaceRange(i, i + 1, [item]);
+        break;
+      }
+    }
+
+    return copied;
+  }
 
   /// [condition]에 해당하는 모든 항목이 [item]으로 교체된 새로운 [List]를 반환합니다.
   ///

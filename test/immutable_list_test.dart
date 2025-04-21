@@ -40,7 +40,7 @@ void main() {
       });
     });
 
-    test('List.immutableInsert는 항목이 추가된 새로운 List를 반환한다', () {
+    test('List.copyInsert는 항목이 추가된 새로운 List를 반환한다', () {
       final List<String> origin = ['A', 'N'];
       final List<String> inserted = origin.copyInsert(0, 'H');
 
@@ -49,7 +49,7 @@ void main() {
       expect(identical(origin, inserted), isFalse);
     });
 
-    test('List.immutableInsertAll은 항목들이 추가된 새로운 List를 반환한다', () {
+    test('List.copyInsertAll은 항목들이 추가된 새로운 List를 반환한다', () {
       final List<String> origin = ['N'];
       final List<String> inserted = origin.copyInsertAll(0, ['H', 'A']);
 
@@ -58,7 +58,7 @@ void main() {
       expect(identical(origin, inserted), isFalse);
     });
 
-    test('List.immutableRemove는 항목이 삭제된 새로운 List를 반환한다.', () {
+    test('List.copyRemove는 항목이 삭제된 새로운 List를 반환한다.', () {
       final List<String> origin = ['H', 'A', 'N', 'G'];
       final List<String> removed = origin.copyRemove('G');
 
@@ -67,7 +67,7 @@ void main() {
       expect(identical(origin, removed), isFalse);
     });
 
-    test('List.immutableRemoveAt은 index번째 항목이 삭제된 새로운 List를 반환한다', () {
+    test('List.copyRemoveAt은 index번째 항목이 삭제된 새로운 List를 반환한다', () {
       final List<String> origin = ['H', 'A', 'N', 'G'];
       final List<String> removed = origin.copyRemoveAt(3);
 
@@ -76,15 +76,40 @@ void main() {
       expect(identical(origin, removed), isFalse);
     });
 
-    test('List.immutableRemoveWhere는 condition에 해당하는 모든 항목이 삭제된 새로운 List를 반환한다', () {
-      bool filterZ(String item) => item == 'Z';
-
+    test('List.copyRemoveWhere는 condition에 해당하는 모든 항목이 삭제된 새로운 List를 반환한다', () {
       final List<String> origin = ['H', 'Z', 'A', 'Z', 'N', 'Z'];
-      final List<String> removed = origin.copyRemoveWhere(filterZ);
+      final List<String> removed = origin.copyRemoveWhere((int index, String item) => item == 'Z');
 
       expect(origin, ['H', 'Z', 'A', 'Z', 'N', 'Z']);
       expect(removed, ['H', 'A', 'N']);
       expect(identical(origin, removed), isFalse);
+    });
+
+    test('List.copyReplaceAt은 index번째 항목이 변경된 새로운 List를 반환한다', () {
+      final List<String> origin = ['F', 'A', 'N'];
+      final List<String> replaced = origin.copyReplaceAt(0, 'H');
+
+      expect(origin, ['F', 'A', 'N']);
+      expect(replaced, ['H', 'A', 'N']);
+      expect(identical(origin, replaced), isFalse);
+    });
+
+    test('List.copyReplaceWhere은 condition에 해당하는 모든 항목이 변경된 새로운 List를 반환한다', () {
+      final List<String> origin = ['B', 'A', 'K', 'A', 'K', 'A'];
+      final List<String> replaced = origin.copyReplaceWhere((int index, String item) => item == 'K', 'N');
+
+      expect(origin, ['B', 'A', 'K', 'A', 'K', 'A']);
+      expect(replaced, ['B', 'A', 'N', 'A', 'N', 'A']);
+      expect(identical(origin, replaced), isFalse);
+    });
+
+    test('List.copyReplaceRange는 start부터 end에 해당하는 항목이 replacements로 교체된 새로운 List를 반환한다', () {
+      final List<String> origin = ['O', 'V', 'E', 'N'];
+      final List<String> replaced = origin.copyReplaceRange(0, 3, ['H', 'A']);
+
+      expect(origin, ['O', 'V', 'E', 'N']);
+      expect(replaced, ['H', 'A', 'N']);
+      expect(identical(origin, replaced), isFalse);
     });
   });
 }

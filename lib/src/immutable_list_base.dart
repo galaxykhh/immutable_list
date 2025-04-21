@@ -88,11 +88,71 @@ extension ImmutableListExtension<T> on List<T> {
   ///
   /// Example:
   /// ```dart
-  /// final List<String> list1 = ['H', 'Z', 'A', 'Z', 'N', 'Z'];
-  /// final List<String> list2 = list1.copyRemoveWhere((item) => item == 'Z');
+  /// final list1 = <String>['H', 'Z', 'A', 'Z', 'N', 'Z'];
+  /// final list2 = list1.copyRemoveWhere((int index, String item) => item == 'Z');
   ///
   /// print(list1); // ['H', 'Z', 'A', 'Z', 'N', 'Z']
   /// print(list2); // ['H', 'A', 'N']
   /// ```
-  List<T> copyRemoveWhere(bool Function(T item) condition) => copy()..removeWhere(condition);
+  List<T> copyRemoveWhere(bool Function(int index, T item) condition) {
+    final List<T> list = [];
+
+    asMap().forEach((k, v) {
+      if (!condition(k, v)) {
+        list.add(v);
+      }
+    });
+
+    return list;
+  }
+
+  /// [index]에 해당하는 항목이 [item]으로 교체된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String>['F', 'A', 'N'];
+  /// final list2 = list1.copyReplaceAt(0, 'H');
+  ///
+  /// print(list1); // ['F', 'A', 'N']
+  /// print(list2); // ['H', 'A', 'N']
+  /// ```
+  List<T> copyReplaceAt(int index, T item) => copy()..replaceRange(index, index + 1, [item]);
+
+  /// [condition]에 해당하는 모든 항목이 [item]으로 교체된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  ///	final list1 = <String>['B', 'A', 'K', 'A', 'K', 'A'];
+  /// final list2 = list1.copyReplaceWhere((int index, String item) => item == 'K', 'N');
+  ///
+  /// print(list1); // ['B', 'A', 'K', 'A', 'K', 'A']
+  /// print(list2); // ['B', 'A', 'N', 'A', 'N', 'A']
+  /// ```
+  List<T> copyReplaceWhere(bool Function(int index, T item) condition, T item) {
+    final List<T> copied = copy();
+
+    asMap().forEach((k, v) {
+      if (condition(k, v)) {
+        copied.replaceRange(k, k + 1, [item]);
+      }
+    });
+
+    return copied;
+  }
+
+  // List<T> copyReplaceWhere(bool Function(T item) condition, T item) {
+  //   final List<T> copied = copy();
+  // }
+
+  /// [start]부터 [end]에 해당하는 범위가 [replacements]로 교체된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String> ['O', 'V', 'E', 'N'];
+  /// final list2 = list1.copyReplaceRange(0, 3, ['H', 'A']);
+  ///
+  /// print(list1); // ['O', 'V', 'E', 'N']
+  /// print(list2); // ['H', 'A', 'N']
+  /// ```
+  List<T> copyReplaceRange(int start, int end, Iterable<T> replacements) => copy()..replaceRange(start, end, replacements);
 }

@@ -11,7 +11,7 @@ void main() {
       expect(identical(copied, origin), isFalse);
     });
 
-    test('List.immutable 메소드는 새로운 항목이 추가된 새로운 List를 반환한다', () {
+    test('List.immutableAdd 메소드는 새로운 항목이 추가된 새로운 List를 반환한다', () {
       final List<String> origin = ['H', 'A'];
       final List<String> added = origin.immutableAdd('N');
 
@@ -38,6 +38,24 @@ void main() {
         expect(updated, equals(['H', 'A', 'N']));
         expect(identical(origin, updated), isFalse);
       });
+    });
+
+    test('List.immutableInsert는 항목이 추가된 새로운 List를 반환한다', () {
+      final List<String> origin = ['A', 'N'];
+      final List<String> inserted = origin.immutableInsert(0, 'H');
+
+      expect(origin, equals(['A', 'N']));
+      expect(inserted, equals(['H', 'A', 'N']));
+      expect(identical(origin, inserted), isFalse);
+    });
+
+    test('List.immutableInsertAll은 항목들이 추가된 새로운 List를 반환한다', () {
+      final List<String> origin = ['N'];
+      final List<String> inserted = origin.immutableInsertAll(0, ['H', 'A']);
+
+      expect(origin, equals(['N']));
+      expect(inserted, equals(['H', 'A', 'N']));
+      expect(identical(origin, inserted), isFalse);
     });
   });
 }

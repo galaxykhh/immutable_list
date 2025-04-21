@@ -35,4 +35,28 @@ extension ImmutableListExtension<T> on List<T> {
   /// print(list2); // ['H', 'A', 'N']
   /// ```
   List<T> immutableAddAll(Iterable<T> iterable) => copy()..addAll(iterable);
+
+  ///　[index]위치에 [item]이 추가된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String>['A', 'N'];
+  /// final list2 = list1.immutableInsert(0, 'H');
+  ///
+  /// print(list1); // ['A', 'N']
+  /// print(list2); // ['H', 'A', 'N']
+  /// ```
+  List<T> immutableInsert(int index, T item) => copy()..insert(index, item);
+
+  ///　[index]위치로부터 [iterable]이 추가된 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String>['N'];
+  /// final list2 = list1.immutableInsert(0, ['H', 'A']);
+  ///
+  /// print(list1); // ['N']
+  /// print(list2); // ['H', 'A', 'N']
+  /// ```
+  List<T> immutableInsertAll(int index, Iterable<T> iterable) => copy()..insertAll(index, iterable);
 }

@@ -195,7 +195,7 @@ extension ImmutableListExtension<T> on List<T> {
   ///
   /// Example:
   /// ```dart
-  /// final list1 = <String> ['O', 'V', 'E', 'N'];
+  /// final list1 = <String>['O', 'V', 'E', 'N'];
   /// final list2 = list1.copyReplaceRange(0, 3, ['H', 'A']);
   ///
   /// print(list1); // ['O', 'V', 'E', 'N']
@@ -203,5 +203,15 @@ extension ImmutableListExtension<T> on List<T> {
   /// ```
   List<T> copyReplaceRange(int start, int end, Iterable<T> replacements) => copy()..replaceRange(start, end, replacements);
 
+  /// 순서가 뒤섞인 새로운 [List]를 반환합니다.
+  ///
+  /// Example:
+  /// ```dart
+  /// final list1 = <String>['H', 'A', 'N'];
+  /// final list2 = list.copyShuffle();
+  ///
+  /// print(list1); // ['H', 'A', 'N']
+  /// print(list2); // shuffled..
+  /// ```
   List<T> copyShuffle([Random? random]) => copy()..shuffle(random);
 }
